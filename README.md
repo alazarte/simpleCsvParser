@@ -39,9 +39,15 @@ the object.
 #### Functions from PHP manual
 
 [fgetcsv()](http://php.net/manual/en/function.fgetcsv.php)
+
 [foreach()](http://php.net/manual/en/control-structures.foreach.php)
-[explore()](http://php.net/manual/en/function.explode.php)
+
+[explode()](http://php.net/manual/en/function.explode.php)
+
+[file\_put\_contents()](http://php.net/manual/en/function.file-put-contents.php)
+
 [$argv](http://php.net/manual/en/reserved.variables.argv.php)
+
 [class and visibility](http://php.net/manual/en/language.oop5.late-static-bindings.php)
 
 #### Similar repositories
@@ -51,4 +57,5 @@ the object.
 #### Stackoverflow questions
 
 [Search in multidimensional array](https://stackoverflow.com/questions/8102221/php-multidimensional-array-searching-find-key-by-specific-value)
+
 [Delete key from array](https://stackoverflow.com/questions/5450148/php-remove-key-from-associative-array)
