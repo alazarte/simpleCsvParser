@@ -38,17 +38,26 @@ the object.
 
 #### Functions from PHP manual
 
+Some of the functions of the program, the manual helped me to know how they 
+work:
+
 [fgetcsv()](http://php.net/manual/en/function.fgetcsv.php)
+Split lines in the csv files to arrays.
 
 [foreach()](http://php.net/manual/en/control-structures.foreach.php)
+Iterate trough the arrays declared.
 
 [explode()](http://php.net/manual/en/function.explode.php)
+Just to check if the input file is '.csv'.
 
 [file\_put\_contents()](http://php.net/manual/en/function.file-put-contents.php)
+Write contents to file without open() nor close().
 
 [$argv](http://php.net/manual/en/reserved.variables.argv.php)
+Command line arguments in PHP.
 
 [class and visibility](http://php.net/manual/en/language.oop5.late-static-bindings.php)
+Encapsulate everything in a class.
 
 #### Similar repositories
 
