@@ -6,6 +6,7 @@ class ParseCsv
     function __construct()
     {
         $this->timestamp = array();
+        $this->header = array();
     }
 
     private function newTimestamp($key)
@@ -37,15 +38,15 @@ class ParseCsv
             {
                 $this->timestamp[$tms]["avg"][$dev_obj] = $this->timestamp[$tms]["sums"][$dev_obj] / $count;
             }
+            unset($this->timestamp[$tms]["count"]);
         }
-        unset($this->timestamp["count"]);
     }
 
     public function readCsv($file)
     {
         if (($handle = fopen($file,"r")) !== FALSE)
         {
-            $this->header = ($data = fgetcsv($handle,50,",") !== FALSE) ? $data : array(null);
+            $this->header = (($data = fgetcsv($handle,50,",")) !== FALSE) ? $data : array(null);
             while(($data = fgetcsv($handle,50,",")) !== FALSE)
             {
                 if(array(null) !== $data)
@@ -69,14 +70,19 @@ class ParseCsv
     {
         foreach(array_keys($this->timestamp) as $key)
         {
-            file_put_contents("../data/results_$key.csv","");
+            foreach($this->header as $val)
+            {
+                file_put_contents("../data/results_$key.csv","$val ", FILE_APPEND);
+            }
         }
+        file_put_contents("../data/results_$key.csv","\n",FILE_APPEND);
     }
 
     public function write()
     {
         $this->cleanFiles();
-        $this->writeHeader();
+        $this->writeHeaders();
+        $this->averages();
         foreach($this->timestamp as $tms => $data)
         {
             foreach($data as $op_type => $tuple)
