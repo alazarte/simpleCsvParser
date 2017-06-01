@@ -9,11 +9,6 @@ class ParseCsv
         $this->header = array();
     }
 
-    private function newTimestamp($key)
-    {
-        $this->timestamp[$key] = array();
-    }
-
     private function adds($data)
     {
         if(isset($this->timestamp[$data[3]]["sums"][$data[0].",synthetic".$data[1]]))
@@ -46,9 +41,10 @@ class ParseCsv
     {
         $last = array_values(array_slice(explode(".",$file),-1))[0];
         if($last == "csv")
-            return TRUE;
-        else
-            return FALSE;
+            if (($handle = fopen($file,"r")) !== FALSE)
+                if(fgetcsv($handle,50,",") !== NULL)
+                    return TRUE;
+        return FALSE;
     }
 
     public function readCsv($file)
@@ -65,7 +61,17 @@ class ParseCsv
                         $this->adds($data);
                         $this->counts($data);
                     }
+                    else
+                    {
+                        $this->csvlog("Found blank line");
+                    }
                 }
+                $this->averages();
+                fclose($handle);
+            }
+            else
+            {
+                csvlog("File does not exists");
             }
         }
         else
@@ -97,7 +103,6 @@ class ParseCsv
     {
         $this->cleanFiles();
         $this->writeHeaders();
-        $this->averages();
         foreach($this->timestamp as $tms => $data)
         {
             foreach($data as $op_type => $tuple)
