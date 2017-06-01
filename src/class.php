@@ -16,18 +16,18 @@ class ParseCsv
 
     private function adds($data)
     {
-        if(isset($this->timestamp[$data[3]]["sums"][$data[0].",".$data[1]]))
-            $this->timestamp[$data[3]]["sums"][$data[0].",".$data[1]] += $data[4];
+        if(isset($this->timestamp[$data[3]]["sums"][$data[0].",synthetic".$data[1]]))
+            $this->timestamp[$data[3]]["sums"][$data[0].",synthetic".$data[1]] += $data[4];
         else
-            $this->timestamp[$data[3]]["sums"][$data[0].",".$data[1]] = $data[4];
+            $this->timestamp[$data[3]]["sums"][$data[0].",synthetic".$data[1]] = $data[4];
     }
 
     private function counts($data)
     {
-        if(isset($this->timestamp[$data[3]]["count"][$data[0].",".$data[1]]))
-            $this->timestamp[$data[3]]["count"][$data[0].",".$data[1]] ++;
+        if(isset($this->timestamp[$data[3]]["count"][$data[0].",synthetic".$data[1]]))
+            $this->timestamp[$data[3]]["count"][$data[0].",synthetic".$data[1]] ++;
         else
-            $this->timestamp[$data[3]]["count"][$data[0].",".$data[1]] = 1;
+            $this->timestamp[$data[3]]["count"][$data[0].",synthetic".$data[1]] = 1;
     }
 
     private function averages()
@@ -42,19 +42,35 @@ class ParseCsv
         }
     }
 
+    private function checkFile($file)
+    {
+        $last = array_values(array_slice(explode(".",$file),-1))[0];
+        if($last == "csv")
+            return TRUE;
+        else
+            return FALSE;
+    }
+
     public function readCsv($file)
     {
-        if (($handle = fopen($file,"r")) !== FALSE)
+        if($this->checkFile($file))
         {
-            $this->header = (($data = fgetcsv($handle,50,",")) !== FALSE) ? $data : array(null);
-            while(($data = fgetcsv($handle,50,",")) !== FALSE)
+            if (($handle = fopen($file,"r")) !== FALSE)
             {
-                if(array(null) !== $data)
+                $this->header = (($data = fgetcsv($handle,50,",")) !== FALSE) ? $data : array(null);
+                while(($data = fgetcsv($handle,50,",")) !== FALSE)
                 {
-                    $this->adds($data);
-                    $this->counts($data);
+                    if(array(null) !== $data)
+                    {
+                        $this->adds($data);
+                        $this->counts($data);
+                    }
                 }
             }
+        }
+        else
+        {
+            $this->csvlog("File provided is not csv");
         }
     }
 
@@ -75,7 +91,6 @@ class ParseCsv
                 file_put_contents("../data/results_$key.csv","$val ", FILE_APPEND);
             }
         }
-        file_put_contents("../data/results_$key.csv","\n",FILE_APPEND);
     }
 
     public function write()
@@ -89,10 +104,15 @@ class ParseCsv
             {
                 foreach($tuple as $dev_obj => $val)
                 {
-                    file_put_contents("../data/results_$tms.csv", "$dev_obj,$op_type,$tms,$val\n",FILE_APPEND);
+                    file_put_contents("../data/results_$tms.csv", "\n$dev_obj,$op_type,$tms,$val",FILE_APPEND);
                 }
             }
         }
+    }
+
+    private function csvlog($msg)
+    {
+        file_put_contents("../data/log.out",date("d/m-G:i: ").$msg."\n",FILE_APPEND);
     }
 }
 

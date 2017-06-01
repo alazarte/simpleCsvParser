@@ -68,3 +68,5 @@ Encapsulate everything in a class.
 [Search in multidimensional array](https://stackoverflow.com/questions/8102221/php-multidimensional-array-searching-find-key-by-specific-value)
 
 [Delete key from array](https://stackoverflow.com/questions/5450148/php-remove-key-from-associative-array)
+
+[Get last element of array w/o deleting it](https://stackoverflow.com/questions/3687358/whats-the-best-way-to-get-the-last-element-of-an-array-without-deleting-it)
