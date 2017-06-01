@@ -7,7 +7,7 @@ The script takes as an argument the name of the csv file that you want to
 parse. The csv has to have the following format:
 
 ```
-\[device\]\[objetct\]\[indicator\]\[timestamp\]\[value\]
+[device][objetct][indicator][timestamp][value]
 ```
 
 The output csv reads each line and generates files depending on the timestamp 
@@ -17,16 +17,16 @@ the values, and its average, grouped by device and object.
 The name of the output files should be identified by timestamp:
 
 ```
-results\_[timestamp].csv
+results_[timestamp].csv
 ```
 
 The output files should have the following format:
 
 ```
-\[device\]\[objetct\]\[sum\]\[timestamp\]\[sum all values\]
+[device][objetct][sum][timestamp][sum all values]
 ```
 ```
-\[device\]\[objetct\]\[count\]\[timestamp\]\[avg all values\]
+[device][objetct][count][timestamp][avg all values]
 ```
 
 The idea to store the result was having a multidimensional array, to 
