@@ -46,7 +46,6 @@ php ParseCsv.php <input file>
 The output files are stored in the data folder, that also contains example 
 files to test the script.
 
-
 ### Script workflow
 
 Creating a new class ParseCsv initializes the **timestamp** array, that will 
