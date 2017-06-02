@@ -35,6 +35,18 @@ distinguish timestamps. Then, each timestamp have its own set of arrays to
 store its average and summations, where the key in each one is the device and 
 the object.
 
+### Usage
+
+To run the script:
+
+```
+php ParseCsv.php <input file>
+```
+
+The output files are stored in the data folder, that also contains example 
+files to test the script.
+
+
 ### Script workflow
 
 Creating a new class ParseCsv initializes the **timestamp** array, that will 
@@ -56,8 +68,9 @@ the input csv file to parse, and for each non-blank line, runs:
 * **averages()** when the loop reaches end of file, then gets the average of 
 the values, deletes the count array, and adds average array.
 
-Then, the functions **write()**, **cleanFiles()** and **writeHeaders()** helps 
-to output a csv file with the format specified above.
+The functions **write()**, **cleanFiles()** and **writeHeaders()** helps 
+to output a csv file with the format specified above, **csvlog** just prints a 
+string to a default log file.
 
 ### Reference sites
 
