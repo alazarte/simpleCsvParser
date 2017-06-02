@@ -41,6 +41,9 @@ Creating a new class ParseCsv initializes the **timestamp** array, that will
 contain sub-arrays **sums** and **average**, for each group of device and 
 object, specified from the csv file.
 
+The other is a simple array **header**, that contains the 4 fields found in the 
+first line of the csv file from input.
+
 The public functions are readCsv($file) and write($file). The first one takes 
 the input csv file to parse, and for each non-blank line, runs:
 
@@ -52,6 +55,9 @@ the input csv file to parse, and for each non-blank line, runs:
 
 * **averages()** when the loop reaches end of file, then gets the average of 
 the values, deletes the count array, and adds average array.
+
+Then, the functions **write()**, **cleanFiles()** and **writeHeaders()** helps 
+to output a csv file with the format specified above.
 
 ### Reference sites
 
