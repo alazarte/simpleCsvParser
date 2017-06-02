@@ -12,7 +12,8 @@ parse. The csv has to have the following format:
 
 The output csv reads each line and generates files depending on the timestamp 
 found in the input file. The files generated contains the summation of all 
-the values, and its average, grouped by device and object.
+the values, and its average, grouped by device and object. So value must be a 
+numeric type.
 
 The name of the output files should be identified by timestamp:
 
@@ -34,6 +35,24 @@ distinguish timestamps. Then, each timestamp have its own set of arrays to
 store its average and summations, where the key in each one is the device and 
 the object.
 
+### Script workflow
+
+Creating a new class ParseCsv initializes the **timestamp** array, that will 
+contain sub-arrays **sums** and **average**, for each group of device and 
+object, specified from the csv file.
+
+The public functions are readCsv($file) and write($file). The first one takes 
+the input csv file to parse, and for each non-blank line, runs:
+
+* **add()** adds the accumulate values, grouped by device and object, to the 
+**sums** array.
+
+* **count()** counts occurrences from the key device and object, stored in the 
+**count** array.
+
+* **averages()** when the loop reaches end of file, then gets the average of 
+the values, deletes the count array, and adds average array.
+
 ### Reference sites
 
 #### Functions from PHP manual
@@ -41,16 +60,16 @@ the object.
 Some of the functions of the program, the manual helped me to know how they 
 work:
 
-[fgetcsv()](http://php.net/manual/en/function.fgetcsv.php)
+[fgetcsv](http://php.net/manual/en/function.fgetcsv.php)
 Split lines in the csv files to arrays.
 
-[foreach()](http://php.net/manual/en/control-structures.foreach.php)
+[foreach](http://php.net/manual/en/control-structures.foreach.php)
 Iterate trough the arrays declared.
 
-[explode()](http://php.net/manual/en/function.explode.php)
+[explode](http://php.net/manual/en/function.explode.php)
 Just to check if the input file is '.csv'.
 
-[file\_put\_contents()](http://php.net/manual/en/function.file-put-contents.php)
+[file\_put\_contents](http://php.net/manual/en/function.file-put-contents.php)
 Write contents to file without open() nor close().
 
 [$argv](http://php.net/manual/en/reserved.variables.argv.php)
@@ -64,6 +83,8 @@ Encapsulate everything in a class.
 [PHPCsvParser](https://github.com/kzykhys/PHPCsvParser)
 
 #### Stackoverflow questions
+
+Some of the question that helped me fixing some small code.
 
 [Search in multidimensional array](https://stackoverflow.com/questions/8102221/php-multidimensional-array-searching-find-key-by-specific-value)
 
